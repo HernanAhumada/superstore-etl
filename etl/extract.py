@@ -1,25 +1,7 @@
 import logging
 import pandas as pd
-import yaml
-from pathlib import Path
 
 logger = logging.getLogger(__name__)
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-
-def load_configuration() -> dict:
-    """Load ETL configuration from YAML file."""
-    config_path = PROJECT_ROOT / "config.yaml"
-    try:
-        with open(config_path, 'r') as f:
-            config = yaml.safe_load(f)
-        logger.info(f"Configuration loaded from {config_path}")
-        return config
-    except FileNotFoundError:
-        logger.error(f"Configuration file not found at {config_path}")
-        raise
-    except yaml.YAMLError as e:
-        logger.error(f"Error parsing configuration file: {e}")
-        raise
 
 def extract(file_path: str | None = None) -> pd.DataFrame:
     """
@@ -32,9 +14,6 @@ def extract(file_path: str | None = None) -> pd.DataFrame:
         ValueError: If the extracted data is empty.
         FileNotFoundError: If the CSV file doesn't exist.
     """
-    if file_path is None:
-        config = load_configuration()
-        file_path = PROJECT_ROOT / config['data']['raw_file']
 
     logger.info(f"Extracting data from {file_path}")
 
@@ -50,7 +29,3 @@ def extract(file_path: str | None = None) -> pd.DataFrame:
     except Exception as e:
         logger.error(f"Error extracting data: {e}")
         raise
-
-if __name__ == "__main__":
-    raw_data = extract()
-    print(raw_data.head())

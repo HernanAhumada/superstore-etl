@@ -1,2 +1,5 @@
 data:
   raw_file: "data/train.csv"
+
+database:
+  connection_string: "postgresql://hernan:hernan@localhost:5432/superstore"

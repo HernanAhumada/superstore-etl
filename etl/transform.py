@@ -96,4 +96,4 @@ def transform(df: pd.DataFrame) -> dict:
     return {"fact_sales": fact_sales, 
             "dim_customer": dim_customer, 
             "dim_product": dim_product, 
-            "dim_location": dim_location }
+            "dim_location": dim_location}
